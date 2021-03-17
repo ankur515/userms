@@ -187,7 +187,7 @@ public class SellerController {
 		public void setReward()
 		{ 
 			String order = "http://13.234.75.237:8100/api/allorders";
-			String buyers = "http://65.1.130.14:8200/api/buyers";
+			String buyers = "http://65.1.130.14:8400/api/buyers";
 			OrderDetailsDTO[] orders = new RestTemplate().getForObject(order, OrderDetailsDTO[].class);
 			BuyerDTO[] buyer = new RestTemplate().getForObject(buyers, BuyerDTO[].class);
 			sellerService.setReward(orders, buyer);
