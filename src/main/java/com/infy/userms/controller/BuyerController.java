@@ -134,7 +134,7 @@ public class BuyerController {
 			ResponseEntity<String> response = null;
 			try
 			{
-			String cart = "http://65.1.130.14:8200/api/cart/";
+			String cart = "http://65.1.130.14:8400/api/cart/";
 			String stock = "http://65.1.132.24:8300/api/products/";
 			CartDTO carts = new RestTemplate().getForObject(cart+buyerid+"/"+prodid,CartDTO.class);
 			ProductDTO product = new RestTemplate().getForObject(stock+prodid, ProductDTO.class);
