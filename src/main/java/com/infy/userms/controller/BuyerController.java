@@ -134,8 +134,8 @@ public class BuyerController {
 			ResponseEntity<String> response = null;
 			try
 			{
-			String cart = "http://localhost:8200/api/cart/";
-			String stock = "http://localhost:8300/api/products/";
+			String cart = "http://65.1.130.14:8200/api/cart/";
+			String stock = "http://65.1.132.24:8300/api/products/";
 			CartDTO carts = new RestTemplate().getForObject(cart+buyerid+"/"+prodid,CartDTO.class);
 			ProductDTO product = new RestTemplate().getForObject(stock+prodid, ProductDTO.class);
 			boolean b = buyerService.validateCart(carts, product);
@@ -159,7 +159,7 @@ public class BuyerController {
 		{
 			List<OrderDetailsDTO> past = new ArrayList<>();
 			
-			String order = "http://localhost:8100/api/allorders";
+			String order = "http://13.234.75.237:8100/api/allorders";
 			OrderDetailsDTO[] orders = new RestTemplate().getForObject(order, OrderDetailsDTO[].class);
 			past = buyerService.viewPastOrders(buyerid,orders);
 			return past;
