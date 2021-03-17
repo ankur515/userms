@@ -87,7 +87,7 @@ public class SellerController {
 		@DeleteMapping(value = "/seller/remove/{sellerid}", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<String> deleteSpecificSell(@PathVariable Integer sellerid)throws Exception {
 			logger.info("Deleting details of seller {}", sellerid);
-			 String productURI = "http://localhost:8300/delete/product/";
+			 String productURI = "http://65.1.132.24:8300/delete/product/";
 			 ResponseEntity<String> response = null;
 			 try
 			 {
@@ -141,7 +141,7 @@ public class SellerController {
 		public void addProduct(@RequestBody ProductDTO product)
 		{
 			//System.out.println(product.getProdid());
-			String productURI = "http://localhost:8300/api/product/add";
+			String productURI = "http://65.1.132.24:8300/api/product/add";
 			new RestTemplate().postForObject(productURI, product,void.class);
 			
 		}
@@ -150,7 +150,7 @@ public class SellerController {
 		@GetMapping(value="remove/product/{prodid}")
 		public void removeProduct(@PathVariable Integer prodid)
 		{
-			String product = "http://localhost:8300/delete/";
+			String product = "http://65.1.132.24:8300/delete/";
 			new RestTemplate().delete(product+prodid,String.class);
 		}
 	
@@ -158,7 +158,7 @@ public class SellerController {
 		@GetMapping(value="update/stock")
 		public void updateStock(@RequestBody ProductDTO product)
 		{
-			String stockURI="http://localhost:8300/api/stock/";
+			String stockURI="http://65.1.132.24:8300/api/stock/";
 			new RestTemplate().put(stockURI+product.getProdid(), product);
 		}
 		
@@ -166,7 +166,7 @@ public class SellerController {
 		@GetMapping(value="orders/{prodid}")
 		public List<OrderDetailsDTO> viewOrdersPlacedOnProduct(@PathVariable Integer prodid)
 		{
-			String orderURI="http://localhost:8100/api/allorders";
+			String orderURI="http://13.234.75.237:8100/api/allorders";
 			//OrderDetailsDTO orders = new OrderDetailsDTO();
 			OrderDetailsDTO[] orders = new RestTemplate().getForObject(orderURI,OrderDetailsDTO[].class);
 			List<OrderDetailsDTO> ordersPlaced=sellerService.viewPlacedOrdersOnProduct(orders, prodid);
@@ -176,7 +176,7 @@ public class SellerController {
 		@PostMapping(value="orders/accept")
 		public String acceptOrder(@RequestBody OrderDetailsDTO orderDetailsDTO)
 		{
-			String orderURI = "http://localhost:8100/api/placeOrder";
+			String orderURI = "http://13.234.75.237:8100/api/placeOrder";
 
 			String str = new RestTemplate().postForObject(orderURI, orderDetailsDTO, String.class);
 			//sellerService.setReward(orderDetailsDTO.getBuyerid(),orderDetailsDTO.getAmount());
@@ -186,8 +186,8 @@ public class SellerController {
 		@GetMapping(value="/reward")
 		public void setReward()
 		{ 
-			String order = "http://localhost:8100/api/allorders";
-			String buyers = "http://localhost:8200/api/buyers";
+			String order = "http://13.234.75.237:8100/api/allorders";
+			String buyers = "http://65.1.130.14:8200/api/buyers";
 			OrderDetailsDTO[] orders = new RestTemplate().getForObject(order, OrderDetailsDTO[].class);
 			BuyerDTO[] buyer = new RestTemplate().getForObject(buyers, BuyerDTO[].class);
 			sellerService.setReward(orders, buyer);
@@ -199,7 +199,7 @@ public class SellerController {
 			ResponseEntity<String> response= null;
 			try
 			{
-			String orderURI="http://localhost:8100/api/order/";
+			String orderURI="http://13.234.75.237:8100/api/order/";
 			new RestTemplate().delete(orderURI+orderid,String.class);
 			response = new ResponseEntity<String>(environment.getProperty("ORDER_DELETED"), HttpStatus.OK);
 			return response;
@@ -212,14 +212,14 @@ public class SellerController {
 		@PutMapping(value="order/statusupdate")
 		public void updateStatus(@RequestBody OrderDetailsDTO order)
 		{
-			String orderURI="http://localhost:8100/api/change/status";
+			String orderURI="http://13.234.75.237:8100/api/change/status";
 			new RestTemplate().put(orderURI,order,String.class);
 		}
 		//reorder
 		@GetMapping(value="/reorder/{orderid}/{prodid}")
 		public String reOrder(@PathVariable Integer orderid, @PathVariable Integer prodid)
 		{
-			String orderURI="http://localhost:8100/api/reorder/";
+			String orderURI="http://13.234.75.237:8100/api/reorder/";
 			String str = new RestTemplate().getForObject(orderURI+orderid+"/"+prodid,String.class);
 			return str;
 		}
